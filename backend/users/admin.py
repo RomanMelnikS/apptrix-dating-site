@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
 
-from .models import CustomUser
+from .models import CustomUser, Match
 
 
 @admin.register(CustomUser)
@@ -22,13 +22,21 @@ class CustomUserAdmin(UserAdmin):
         'email',
         'first_name',
         'last_name',
-        'avatar_tag'
+        'avatar_tag',
+        'id'
     )
     list_filter = (
         'username',
         'sex'
     )
-
     fieldsets = UserAdmin.fieldsets + (
             (None, {'fields': ('sex', 'avatar')}),
+    )
+
+
+@admin.register(Match)
+class MatchAdmin(admin.ModelAdmin):
+    list_display = (
+        'liking_client',
+        'liked_client'
     )

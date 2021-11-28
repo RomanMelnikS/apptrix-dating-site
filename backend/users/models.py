@@ -40,3 +40,26 @@ class CustomUser(AbstractUser):
         ordering = ('id',)
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+
+
+class Match(models.Model):
+    liking_client = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name='liking',
+        verbose_name='Симпатизирующий'
+    )
+    liked_client = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name='liked',
+        verbose_name='Понравившийся',
+        null=True
+    )
+
+    def __str__(self):
+        return ('Симпатии')
+
+    class Meta:
+        verbose_name = 'Симпатии'
+        verbose_name_plural = 'Симпатии'

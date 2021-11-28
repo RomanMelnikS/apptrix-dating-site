@@ -3,8 +3,9 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 from PIL import Image
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 
-from .models import CustomUser
+from .models import CustomUser, Match
 
 
 class ClientsSerializer(serializers.ModelSerializer):
@@ -33,6 +34,33 @@ class ClientsSerializer(serializers.ModelSerializer):
         user.avatar.save(user.username + '_avatar.jpg', add_watermark(avatar))
         user.save()
         return user
+
+
+class MatchesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = ('__all__')
+        model = Match
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Match.objects.all(),
+                fields=['liking_client', 'liked_client']
+            )
+        ]
+
+    def validate(self, data):
+        if self.context['request'].user != data.get('liked_client'):
+            return data
+        raise serializers.ValidationError(
+            'Нельзя понравится самому себе!'
+        )
+
+    def to_representation(self, instance):
+        serializer = ClientsSerializer(
+            instance.liked_client,
+            context=self.context
+        )
+        return serializer.data
 
 
 def add_watermark(avatar):
