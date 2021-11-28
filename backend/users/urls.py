@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView
 )
 
-from .views import ClientCreateView, match
+from .views import ClientCreateView, match, ClientsView
 
 urlpatterns = [
     path(
@@ -26,5 +26,10 @@ urlpatterns = [
         'clients/token/refresh/',
         TokenRefreshView.as_view(),
         name='token_refresh'
+    ),
+    path(
+        'list/',
+        ClientsView.as_view(),
+        name='clients_list'
     ),
 ]
