@@ -4,6 +4,10 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+import django_heroku
+
+django_heroku.settings(locals())
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(os.path.join(BASE_DIR, '.env'))
