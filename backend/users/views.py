@@ -1,10 +1,13 @@
 from django.core.mail import send_mail
-from rest_framework.generics import CreateAPIView, get_object_or_404, ListAPIView
-from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.generics import (CreateAPIView, ListAPIView,
+                                     get_object_or_404)
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
+
+from .filters import ClientsFilter
 from .models import CustomUser, Match
 from .serializers import ClientsSerializer, MatchesSerializer
 
@@ -12,6 +15,12 @@ from .serializers import ClientsSerializer, MatchesSerializer
 class ClientCreateView(CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = ClientsSerializer
+
+
+class ClientsView(ListAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = ClientsSerializer
+    filterset_class = ClientsFilter
 
 
 @api_view(http_method_names=['POST'])
@@ -62,9 +71,3 @@ def match(request, id=None):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-
-
-class ClientsView(ListAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = ClientsSerializer
-    filterset_fields = ['sex', 'first_name', 'last_name']

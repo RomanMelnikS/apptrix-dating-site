@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.html import format_html
 
-from .models import CustomUser, Match
+from .models import CustomUser, Match, Location
 
 
 @admin.register(CustomUser)
@@ -39,4 +39,13 @@ class MatchAdmin(admin.ModelAdmin):
     list_display = (
         'liking_client',
         'liked_client'
+    )
+
+
+@admin.register(Location)
+class LocationAdmin(admin.ModelAdmin):
+    list_display = (
+        'client',
+        'latitude',
+        'longitude'
     )

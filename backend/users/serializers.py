@@ -4,13 +4,27 @@ from django.core.files.base import ContentFile
 from PIL import Image
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
+from drf_extra_fields.fields import Base64ImageField
 
-from .models import CustomUser, Match
+from .models import CustomUser, Match, Location
+
+
+class LocationSerializer(serializers.ModelSerializer):
+    longitude = serializers.FloatField()
+    latitude = serializers.FloatField()
+
+    class Meta:
+        fields = (
+            'longitude',
+            'latitude'
+        )
+        model = Location
 
 
 class ClientsSerializer(serializers.ModelSerializer):
     sex = serializers.ChoiceField(choices=['м', 'ж'])
-    avatar = serializers.ImageField()
+    avatar = Base64ImageField()
+    location = LocationSerializer()
 
     class Meta:
         fields = (
@@ -20,7 +34,8 @@ class ClientsSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'sex',
-            'avatar'
+            'avatar',
+            'location'
         )
         extra_kwargs = {
             'password': {'write_only': True}
@@ -28,10 +43,16 @@ class ClientsSerializer(serializers.ModelSerializer):
         model = CustomUser
 
     def create(self, validated_data):
-        avatar = self.validated_data.pop('avatar')
-        user = CustomUser.objects.create(**validated_data)
+        loc = validated_data.pop('location')
+        avatar = validated_data.pop('avatar')
+        location = Location.objects.create(**loc)
+        user = CustomUser.objects.create(location=location, **validated_data)
+        location.client = user
+        location.save()
+        user.avatar.save(
+            user.username + '_avatar.jpg', add_watermark(avatar)
+        )
         user.set_password(validated_data['password'])
-        user.avatar.save(user.username + '_avatar.jpg', add_watermark(avatar))
         user.save()
         return user
 

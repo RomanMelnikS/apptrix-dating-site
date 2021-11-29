@@ -28,6 +28,13 @@ class CustomUser(AbstractUser):
         unique=True,
         null=False
     )
+    location = models.ForeignKey(
+        'Location',
+        on_delete=models.SET_NULL,
+        related_name='location',
+        verbose_name='Локация',
+        null=True
+    )
     is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'
@@ -63,3 +70,30 @@ class Match(models.Model):
     class Meta:
         verbose_name = 'Симпатии'
         verbose_name_plural = 'Симпатии'
+
+
+class Location(models.Model):
+    client = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name='client',
+        verbose_name='Клиент',
+        null=True
+    )
+    latitude = models.FloatField(
+        verbose_name='Широта',
+        unique=False,
+        null=True
+    )
+    longitude = models.FloatField(
+        verbose_name='Долгота',
+        unique=False,
+        null=True
+    )
+
+    def __str__(self):
+        return ('Локация')
+
+    class Meta:
+        verbose_name = 'Локации'
+        verbose_name_plural = 'Локации'
