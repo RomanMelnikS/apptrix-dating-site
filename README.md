@@ -1,5 +1,11 @@
 # apptrix-dating-site
 
+Проект развёрнут и доступен для ознакомления здесь https://safe-waters-89972.herokuapp.com/api/list/
+
+Admin:
+- ad@ad.ru
+- admin
+
 ### Авторизация:
 - Переходим на /api/clients/token/login/ вводим необходимые данные.
 - Получаем "access": "token" и "refresh": "token"
