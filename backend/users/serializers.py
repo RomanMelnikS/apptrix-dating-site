@@ -86,7 +86,7 @@ class MatchesSerializer(serializers.ModelSerializer):
 
 def add_watermark(avatar):
     img = Image.open(avatar).convert('RGBA').resize((1200, 960))
-    watermark = Image.open('backend_static/watermark.png').convert('RGBA')
+    watermark = Image.open('watermark.png').convert('RGBA')
     watermark.thumbnail((1000, 500), Image.ANTIALIAS)
     img.paste(watermark, (700, 450), mask=watermark)
     buffer = BytesIO()
