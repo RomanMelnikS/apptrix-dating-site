@@ -1,12 +1,12 @@
 from io import BytesIO
 
 from django.core.files.base import ContentFile
+from drf_extra_fields.fields import Base64ImageField
 from PIL import Image
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
-from drf_extra_fields.fields import Base64ImageField
 
-from .models import CustomUser, Match, Location
+from .models import CustomUser, Location, Match
 
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -86,7 +86,7 @@ class MatchesSerializer(serializers.ModelSerializer):
 
 def add_watermark(avatar):
     img = Image.open(avatar).convert('RGBA').resize((1200, 960))
-    watermark = Image.open('backend_static/watermark.png').convert('RGBA')
+    watermark = Image.open('watermark.png').convert('RGBA')
     watermark.thumbnail((1000, 500), Image.ANTIALIAS)
     img.paste(watermark, (700, 450), mask=watermark)
     buffer = BytesIO()

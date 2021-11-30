@@ -6,7 +6,6 @@ from rest_framework.generics import (CreateAPIView, ListAPIView,
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-
 from .filters import ClientsFilter
 from .models import CustomUser, Match
 from .serializers import ClientsSerializer, MatchesSerializer
