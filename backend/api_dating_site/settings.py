@@ -13,7 +13,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 
 DEBUG = bool(int(os.environ['DEBUG']))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
