@@ -1,12 +1,12 @@
 from io import BytesIO
 
 from django.core.files.base import ContentFile
+from drf_extra_fields.fields import Base64ImageField
 from PIL import Image
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
-from drf_extra_fields.fields import Base64ImageField
 
-from .models import CustomUser, Match, Location
+from .models import CustomUser, Location, Match
 
 
 class LocationSerializer(serializers.ModelSerializer):
