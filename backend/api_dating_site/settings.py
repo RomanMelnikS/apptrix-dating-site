@@ -59,20 +59,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'api_dating_site.wsgi.application'
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.environ['DB_ENGINE'],
+#         'NAME': os.environ['DB_NAME'],
+#         'USER': os.environ['POSTGRES_USER'],
+#         'PASSWORD': os.environ['POSTGRES_PASSWORD'],
+#         'HOST': os.environ['DB_HOST'],
+#         'PORT': os.environ['DB_PORT'],
+#     }
+# }
+
+# db_from_env = dj_database_url.config(conn_max_age=500)
+
+# DATABASES['default'].update(db_from_env)
+
 DATABASES = {
     'default': {
-        'ENGINE': os.environ['DB_ENGINE'],
-        'NAME': os.environ['DB_NAME'],
-        'USER': os.environ['POSTGRES_USER'],
-        'PASSWORD': os.environ['POSTGRES_PASSWORD'],
-        'HOST': os.environ['DB_HOST'],
-        'PORT': os.environ['DB_PORT'],
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
-db_from_env = dj_database_url.config(conn_max_age=500)
-
-DATABASES['default'].update(db_from_env)
 
 AUTH_PASSWORD_VALIDATORS = [
     {
