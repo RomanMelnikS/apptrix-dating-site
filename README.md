@@ -1,7 +1,5 @@
 # apptrix-dating-site
 
-Проект развёрнут и доступен для ознакомления здесь https://safe-waters-89972.herokuapp.com/api/list/
-
 Admin:
 - ad@ad.ru
 - admin
@@ -43,7 +41,7 @@ Admin:
 - ?sex= 
 - ?first_name=
 - ?last_name=
-- ?location= (пока работает не так как должен, отображает пользователей у которых указана локация, доступен только авторизованым пользователям) 
+- ?location= 
 
 
 
