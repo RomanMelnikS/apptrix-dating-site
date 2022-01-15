@@ -10,6 +10,8 @@ from .models import CustomUser, Location, Match
 
 
 class LocationSerializer(serializers.ModelSerializer):
+    """Сериализация модели локации участника(пользователя).
+    """
     longitude = serializers.FloatField()
     latitude = serializers.FloatField()
 
@@ -22,6 +24,8 @@ class LocationSerializer(serializers.ModelSerializer):
 
 
 class ClientsSerializer(serializers.ModelSerializer):
+    """Сериализация модели участника(пользователя).
+    """
     sex = serializers.ChoiceField(choices=['м', 'ж'])
     avatar = Base64ImageField()
     location = LocationSerializer()
@@ -58,6 +62,8 @@ class ClientsSerializer(serializers.ModelSerializer):
 
 
 class MatchesSerializer(serializers.ModelSerializer):
+    """Сериализация модели симпатий участников.
+    """
 
     class Meta:
         fields = ('__all__')
@@ -85,6 +91,18 @@ class MatchesSerializer(serializers.ModelSerializer):
 
 
 def add_watermark(avatar):
+    """Добавление водяного знака на аватар участника.
+
+    Args:
+        avatar (img): Аватар участника без водяного знака.
+
+    Vars:
+        img (Image): Подготовленный для обработка аватар.
+        watermark (Image): Водяной знак.
+
+    Returns:
+        content (ContentFile): Обработанный аватар с водяным знаком.
+    """
     img = Image.open(avatar).convert('RGBA').resize((1200, 960))
     watermark = Image.open('watermark.png').convert('RGBA')
     watermark.thumbnail((1000, 500), Image.ANTIALIAS)

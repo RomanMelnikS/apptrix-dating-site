@@ -12,11 +12,15 @@ from .serializers import ClientsSerializer, MatchesSerializer
 
 
 class ClientCreateView(CreateAPIView):
+    """Регистрация(создание) нового пользователя(участника).
+    """
     queryset = CustomUser.objects.all()
     serializer_class = ClientsSerializer
 
 
 class ClientsView(ListAPIView):
+    """Представление списка всех пользователей(участников).
+    """
     queryset = CustomUser.objects.all()
     serializer_class = ClientsSerializer
     filterset_class = ClientsFilter
@@ -25,6 +29,19 @@ class ClientsView(ListAPIView):
 @api_view(http_method_names=['POST'])
 @permission_classes([IsAuthenticated])
 def match(request, id=None):
+    """Создание симпатий между пользователями(участниками).
+
+    Если симпатии взаимны происходит отправка уведомлений на электронную почту
+    кождого участника.
+
+    Args:
+        id (int, optional): id понравившегося участника. По умолчанию None.
+
+    Vars:
+        liking_client (CustomUser) : Участник, создающий симпатию.
+        liked_client (CustomUser) : Участник, которому оставили симпатию.
+
+    """
     liking_client = request.user
     liked_client = get_object_or_404(
         CustomUser,

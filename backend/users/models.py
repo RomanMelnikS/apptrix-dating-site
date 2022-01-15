@@ -3,11 +3,34 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
+    """Модель участника(пользователя).
+
+    Vars:
+        username (char): Никнэйм участника.
+        password (char): Пароль участника.
+        first_name (char): Имя участника.
+        last_name (char): Фамилия участника.
+        avatar (img): Аватарка участника.
+        sex (char): Пол участника.
+        email (email): Email участника.
+        location (Location): Местоположение участника.
+    """
     SEX_CHOICES = [
         ('м', 'Мужской'),
         ('ж', 'Женский')
     ]
-
+    first_name = models.CharField(
+        max_length=150,
+        verbose_name='Имя',
+        help_text='Ваше имя',
+        null=False
+    )
+    last_name = models.CharField(
+        max_length=150,
+        verbose_name='Фамилия',
+        help_text='Ваша фамилия',
+        null=False
+    )
     avatar = models.ImageField(
         upload_to='avatars/',
         verbose_name='Аватарка',
@@ -50,6 +73,12 @@ class CustomUser(AbstractUser):
 
 
 class Match(models.Model):
+    """Модель симпатий участников.
+
+    Vars:
+        liking_client (CustomUser): Участник, создающий симпатию.
+        liked_client (CustomUser): Участник, которому оставили симпатию.
+    """
     liking_client = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
@@ -73,6 +102,13 @@ class Match(models.Model):
 
 
 class Location(models.Model):
+    """Модель локации участника.
+
+    Vars:
+        client (CustomUser): Участник, к которому приязываются координаты.
+        latitude (float): Координата широты.
+        longitude (float): Координата долготы.
+    """
     client = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,

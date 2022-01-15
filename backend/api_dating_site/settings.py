@@ -25,7 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'django_filters',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -66,7 +66,7 @@ DATABASES = {
         'USER': os.environ['POSTGRES_USER'],
         'PASSWORD': os.environ['POSTGRES_PASSWORD'],
         'HOST': os.environ['DB_HOST'],
-        'PORT': os.environ['DB_PORT'],
+        'PORT': os.environ['DB_PORT']
     }
 }
 
