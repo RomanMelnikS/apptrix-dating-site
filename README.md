@@ -1,5 +1,7 @@
 # apptrix-dating-site
 
+Проект развернут здесь: https://apptrix-dating-site.herokuapp.com/api/list/
+
 Admin:
 - ad@ad.ru
 - admin
