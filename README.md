@@ -11,7 +11,7 @@
 1. Откройте терминал и перейдите в ту директорию, в которой будет располагаться проект.
 2. Склонируйтуе проект к себе на машину:
 ```python
-git clone https://github.com/RomanMelnikS/apptrix-dating-site.git
+git clone https://github.com/RomanMelnikS/dating-site.git
 ```
 3. Перейдите в корневую директорию проекта создайте и активируйте виртуальное окружение:
 ```python
