@@ -24,22 +24,15 @@ pip install -r requirements.txt
     - DEBUG - 1
     - EMAIL - Ваш почтовый хост @yandex.ru
     - EMAIL_PASSWOR - Пароль от почтового хоста
-5. В backend/settings.py:
-```python
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-```
-6. Перейдите в директорию backend/ и выполните команды:
+5. Перейдите в директорию backend/ и выполните команды:
 ```python
 python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
 ```
 Проект запустится локально на вашей машине и будет доступен по ссылке http://127.0.0.1:8000/.
+
+Описание API http://127.0.0.1:8000/docs/redoc/ или http://127.0.0.1:8000/docs/swagger/.
 
 ### Авторизация:
 - Переходим на /api/clients/token/login/ вводим необходимые данные.
