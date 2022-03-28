@@ -8,6 +8,7 @@ from django.views.static import serve
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('users.urls')),
+    path('docs/', include('docs.yasg')),
 ]
 
 if settings.DEBUG:

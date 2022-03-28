@@ -1,4 +1,6 @@
 from django.core.mail import send_mail
+from django.utils.decorators import method_decorator
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import (CreateAPIView, ListAPIView,
@@ -11,6 +13,12 @@ from .models import CustomUser, Match
 from .serializers import ClientsSerializer, MatchesSerializer
 
 
+@method_decorator(
+    name='post',
+    decorator=swagger_auto_schema(
+        operation_summary='Регистрация(создание) нового пользователя.',
+        tags=['Пользователи']
+    ))
 class ClientCreateView(CreateAPIView):
     """Регистрация(создание) нового пользователя(участника).
     """
@@ -18,6 +26,12 @@ class ClientCreateView(CreateAPIView):
     serializer_class = ClientsSerializer
 
 
+@method_decorator(
+    name='get',
+    decorator=swagger_auto_schema(
+        operation_summary='Список всех пользователей.',
+        tags=['Пользователи']
+    ))
 class ClientsView(ListAPIView):
     """Представление списка всех пользователей(участников).
     """
@@ -26,6 +40,7 @@ class ClientsView(ListAPIView):
     filterset_class = ClientsFilter
 
 
+@swagger_auto_schema(method='post', tags=['Пользователи'])
 @api_view(http_method_names=['POST'])
 @permission_classes([IsAuthenticated])
 def match(request, id=None):
